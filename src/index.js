@@ -5,7 +5,7 @@ import requestAnimationFrame from 'requestanimationframe'
 import { Noise } from 'noisejs'
 let AudioContext = window.AudioContext || window.webkitAudioContext
 
-class Generator {
+class DataGenerator {
   constructor(framerate = 0, cb) {
     if (typeof cb !== 'function') {
       console.error('generator requires a callback')
@@ -61,7 +61,7 @@ const noiseArrHelper = (shape = [1, 0, 0], fn2d, fn3d) => {
  * defaults to 0, which uses requestAnimationFrame
  * @returns {Observable} stream of the current UTC time in ms
  */
-export function time (framerate=0) {
+export function time (framerate = 0) {
   return Rx.Observable.create((observer) => {
     if (framerate === 0) {
       let getTime = () => {
@@ -80,12 +80,12 @@ export function time (framerate=0) {
 
 /**
  * a wrapper to make getting a webcam feed much easier than the standard getUserMedia API
- * @param {number} [framerate=0] optional framerate.
+ * @param {number} [$0.framerate=0] optional framerate.
  * defaults to 0, which uses requestAnimationFrame
- * @param {number} [width=320] optional width for the returned frame (height is calculated).
+ * @param {number} [$0.width=320] optional width for the returned frame (height is calculated).
  * @returns {Observable} pixel array stream
  */
-export function sight ({framerate = 0, width=320} = {}) {
+export function sight ({framerate = 0, width = 320}) {
   let canvas = document.createElement('canvas')
   let ctx = canvas.getContext('2d')
   let video = document.createElement('video')
@@ -127,12 +127,12 @@ export function sight ({framerate = 0, width=320} = {}) {
 
 /**
  * a wrapper to make getting a microphone feed much easier than the standard getUserMedia API
- * @param {number} [framerate=0] optional framerate.
+ * @param {number} [$0.framerate=0] optional framerate.
  * defaults to 0, which uses requestAnimationFrame
- * @param {number} [fftSize=2048] optional fft resolution.
+ * @param {number} [$0.fftSize=2048] optional fft resolution.
  * @returns {Observable} Uint8Array stream
  */
-export function sound ({framerate = 0, fftSize=2048} = {}) {
+export function sound ({framerate = 0, fftSize=2048}) {
   let audioCtx = new AudioContext();
   var analyser = audioCtx.createAnalyser();
   analyser.fftSize = fftSize;
@@ -283,19 +283,19 @@ export function touchend () {
 /**
   * generates a stream of random numbers
   *
-  * @param {number} [seed=Math.random()] optional seed for the generator.
-  * @param {array} [shape=[1, 0, 0]] the dimensionality of the returned value
+  * @param {number} [$0.seed=Math.random()] optional seed for the generator.
+  * @param {array} [$0.shape=[1, 0, 0]] the dimensionality of the returned value
   * shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
   * shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
   * so [5, 5], for example, would return a 5x5 array of random values between 0 and 1
-  * @param {number} [framerate=0] optional framerate.
+  * @param {number} [$0.framerate=0] optional framerate.
   * defaults to 0, which uses requestAnimationFrame
   * @returns {Observable} stream of random numbers or an array of random numbers
  */
-export function random ({seed = null, shape = [1, 0, 0], framerate = 0} = {}) {
+export function random ({seed = null, shape = [1, 0, 0], framerate = 0}) {
   if (!seed) {seed = Math.random()}
   return Rx.Observable.create((observer) => {
-    let gen = new Generator(framerate, () => {
+    let gen = new DataGenerator(framerate, () => {
       let noise = noiseArrHelper(shape, Math.random, Math.random)
       observer.onNext(noise)
     })
@@ -307,20 +307,20 @@ export function random ({seed = null, shape = [1, 0, 0], framerate = 0} = {}) {
 
 /**
   * generates a stream of values using simplex noise
-  * @param {number} [seed=Math.random()] optional seed for the generator.
-  * @param {array} [shape=[1, 0, 0]] the dimensionality of the returned value
+  * @param {number} [$0.seed=Math.random()] optional seed for the generator.
+  * @param {array} [$0.shape=[1, 0, 0]] the dimensionality of the returned value
   * shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
   * shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
   * so [5, 5], for example, would return a 5x5 array of simplex noise values
-  * @param {number} [framerate=0] optional framerate.
+  * @param {number} [$0.framerate=0] optional framerate.
   * defaults to 0, which uses requestAnimationFrame
   * @returns {Observable} stream of simplex values
  */
-export function simplexnoise ({seed = null, shape = [1, 0, 0], framerate = 0} = {}) {
+export function simplexnoise ({seed = null, shape = [1, 0, 0], framerate = 0}) {
   if (!seed) {seed = Math.random()}
   return Rx.Observable.create((observer) => {
     let noiseGen = new Noise(seed)
-    let gen = new Generator(framerate, () => {
+    let gen = new DataGenerator(framerate, () => {
       let noise = noiseArrHelper(shape, (x, y) => {
         return noiseGen.simplex2(x, y)
       }, (x, y, z) => {
@@ -336,20 +336,20 @@ export function simplexnoise ({seed = null, shape = [1, 0, 0], framerate = 0} = 
 
 /**
   * generates a stream of values using perlin noise
-  * @param {number} [seed=Math.random()] optional seed for the generator.
-  * @param {array} [shape=[1, 0, 0]] the dimensionality of the returned value
+  * @param {number} [$0.$0.seed=Math.random()] optional seed for the generator.
+  * @param {array} [$0.$0.shape=[1, 0, 0]] the dimensionality of the returned value
   * shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
   * shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
   * so [5, 5], for example, would return a 5x5 array of perlin noise values
-  * @param {number} [framerate=0] optional framerate.
+  * @param {number} [$0.$0.framerate=0] optional framerate.
   * defaults to 0, which uses requestAnimationFrame
   * @returns {Observable} stream of perlin values
  */
-export function perlinnoise ({seed = null, shape = [1, 0, 0], framerate = 0} = {}) {
+export function perlinnoise ({seed = null, shape = [1, 0, 0], framerate = 0}) {
   if (!seed) {seed = Math.random()}
   return Rx.Observable.create((observer) => {
     let noiseGen = new Noise(seed)
-    let gen = new Generator(framerate, () => {
+    let gen = new DataGenerator(framerate, () => {
       let noise = noiseArrHelper(shape, (x, y) => {
         return noiseGen.perlin2(x, y)
       }, (x, y, z) => {

@@ -4,9 +4,7 @@ Web Sensors is a wrapper around a handful of common web APIs. It provides a simp
 
 # Installation
 
-```
-npm install web-sensors --save
-```
+    npm install web-sensors --save
 
 # Example Usage
 
@@ -50,12 +48,10 @@ a wrapper to make getting a webcam feed much easier than the standard getUserMed
 
 **Parameters**
 
--   `framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
-    defaults to 0, which uses requestAnimationFrame (optional, default `0`)
--   `width` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional width for the returned frame (height is calculated). (optional, default `320`)
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `$0.framerate`   (optional, default `0`)
-    -   `$0.width`   (optional, default `320`)
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
+        defaults to 0, which uses requestAnimationFrame (optional, default `0`)
+    -   `$0.width` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional width for the returned frame (height is calculated). (optional, default `320`)
 
 Returns **Observable** pixel array stream
 
@@ -65,12 +61,10 @@ a wrapper to make getting a microphone feed much easier than the standard getUse
 
 **Parameters**
 
--   `framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
-    defaults to 0, which uses requestAnimationFrame (optional, default `0`)
--   `fftSize` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional fft resolution. (optional, default `2048`)
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `$0.framerate`   (optional, default `0`)
-    -   `$0.fftSize`   (optional, default `2048`)
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
+        defaults to 0, which uses requestAnimationFrame (optional, default `0`)
+    -   `$0.fftSize` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional fft resolution. (optional, default `2048`)
 
 Returns **Observable** Uint8Array stream
 
@@ -158,17 +152,14 @@ generates a stream of random numbers
 
 **Parameters**
 
--   `seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
--   `shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
-    shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
-    shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
-    so [5, 5], for example, would return a 5x5 array of random values between 0 and 1 (optional, default `[1,0,0]`)
--   `framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
-    defaults to 0, which uses requestAnimationFrame (optional, default `0`)
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `$0.seed`   (optional, default `null`)
-    -   `$0.shape`   (optional, default `[1, 0, 0]`)
-    -   `$0.framerate`   (optional, default `0`)
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
+    -   `$0.shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
+        shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
+        shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
+        so [5, 5], for example, would return a 5x5 array of random values between 0 and 1 (optional, default `[1,0,0]`)
+    -   `$0.framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
+        defaults to 0, which uses requestAnimationFrame (optional, default `0`)
 
 Returns **Observable** stream of random numbers or an array of random numbers
 
@@ -178,17 +169,14 @@ generates a stream of values using simplex noise
 
 **Parameters**
 
--   `seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
--   `shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
-    shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
-    shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
-    so [5, 5], for example, would return a 5x5 array of simplex noise values (optional, default `[1,0,0]`)
--   `framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
-    defaults to 0, which uses requestAnimationFrame (optional, default `0`)
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `$0.seed`   (optional, default `null`)
-    -   `$0.shape`   (optional, default `[1, 0, 0]`)
-    -   `$0.framerate`   (optional, default `0`)
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
+    -   `$0.shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
+        shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
+        shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
+        so [5, 5], for example, would return a 5x5 array of simplex noise values (optional, default `[1,0,0]`)
+    -   `$0.framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
+        defaults to 0, which uses requestAnimationFrame (optional, default `0`)
 
 Returns **Observable** stream of simplex values
 
@@ -198,16 +186,16 @@ generates a stream of values using perlin noise
 
 **Parameters**
 
--   `seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
--   `shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
-    shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
-    shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
-    so [5, 5], for example, would return a 5x5 array of perlin noise values (optional, default `[1,0,0]`)
--   `framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
-    defaults to 0, which uses requestAnimationFrame (optional, default `0`)
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `$0.seed`   (optional, default `null`)
     -   `$0.shape`   (optional, default `[1, 0, 0]`)
     -   `$0.framerate`   (optional, default `0`)
+-   `$0.$0.seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
+-   `$0.$0.shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
+    shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
+    shape[2] corresponds to the length of the z axis. Shape array can be any length between 1 and 3,
+    so [5, 5], for example, would return a 5x5 array of perlin noise values (optional, default `[1,0,0]`)
+-   `$0.$0.framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
+    defaults to 0, which uses requestAnimationFrame (optional, default `0`)
 
 Returns **Observable** stream of perlin values
