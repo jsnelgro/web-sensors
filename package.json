@@ -8,6 +8,17 @@
     "build": "babel src -d lib",
     "prepublish": "npm run build"
   },
+  "keywords": [
+    "client",
+    "html5",
+    "sensors",
+    "streams",
+    "getUserMedia",
+    "noise",
+    "rxjs",
+    "audio",
+    "video"
+  ],
   "author": "johnny snelgrove <johnny.snelgrove@gmail.com> (https://github.com/jsnelgro)",
   "license": "MIT",
   "repository": {
