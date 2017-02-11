@@ -1,6 +1,6 @@
 {
   "name": "web-sensors",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "sensor streams for reactive applications",
   "main": "lib/index.js",
   "scripts": {

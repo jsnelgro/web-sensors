@@ -210,7 +210,9 @@ export function mousemove () {
  * a simple version of mousemove that only returns the clientX and clientY location
  * @returns {Observable} {x, y} of the mouse position
  */
-export const mouse = mousemove.map((ev) => {return {x: ev.clientX, y: ev.clientY}})
+ export function mouse () {
+   return rxdom.DOM.mousemove(document).map((ev) => {return {x: ev.clientX, y: ev.clientY}})
+ }
 
 /**
  * @returns {Observable} document mouseup event
@@ -271,7 +273,9 @@ export function touchmove () {
 /**
  * @returns {Observable} document touchmove event
  */
-export const touch = touchmove
+ export function touch () {
+   return rxdom.DOM.touchmove(document)
+ }
 
 /**
  * @returns {Observable} document touchend event
