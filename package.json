@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "node lib/index.js",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "prepublish": "npm run build"
   },
   "author": "johnny snelgrove <johnny.snelgrove@gmail.com> (https://github.com/jsnelgro)",
   "license": "MIT",
