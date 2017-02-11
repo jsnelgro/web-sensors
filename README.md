@@ -2,6 +2,12 @@
 
 Web Sensors is a wrapper around a handful of common web APIs. It provides a simple way to add real-world sensors to a web application. This library was developed to make creative web coding easier. It also includes streams for perlin and simplex noise.
 
+# Installation
+
+```
+npm install web-sensors --save
+```
+
 # Example Usage
 
     import { sight, click, mouse, simplexnoise } from 'web-sensors'
@@ -14,7 +20,7 @@ Web Sensors is a wrapper around a handful of common web APIs. It provides a simp
       state.update('click', ev)
     })
 
-    mouse().map((ev) => {return {x: ev.clientX, y: ev.clientY}})
+    mousemove().map((ev) => {return {x: ev.clientX, y: ev.clientY}})
     .subscribe((location) => {
       state.update('mouse', location)
     })
