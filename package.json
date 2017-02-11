@@ -1,0 +1,18 @@
+{
+  "name": "observable-sensors",
+  "version": "1.0.0",
+  "description": "sensor streams for reactive applications",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "getusermedia": "^2.0.1",
+    "requestanimationframe": "0.0.23",
+    "rx-dom": "^7.0.3",
+    "rx-lite": "^4.0.8"
+  }
+}
