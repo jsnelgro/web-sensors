@@ -13,7 +13,11 @@ class DataGenerator {
     }
     this.framerate = framerate
     this.interval = null
+    this.frameWaitTime = 0
+    this.lastTime = Date.now()
     let wrapperFn = () => {
+      this.frameWaitTime = Date.now() - this.lastTime
+      this.lastTime = Date.now()
       cb()
       if (this.framerate === 0) {
         requestAnimationFrame(wrapperFn)
@@ -21,7 +25,7 @@ class DataGenerator {
       else {
         setTimeout(() => {
           requestAnimationFrame(wrapperFn)},
-        1/framerate * 1000)
+        1/framerate * (1000 - this.frameWaitTime))
       }
     }
     this.interval = requestAnimationFrame(wrapperFn)
@@ -63,17 +67,11 @@ const noiseArrHelper = (shape = [1, 0, 0], fn2d, fn3d) => {
  */
 export function time (framerate = 0) {
   return Rx.Observable.create((observer) => {
-    if (framerate === 0) {
-      let getTime = () => {
-        observer.onNext(Date.now())
-        if(framerate === 0) { requestAnimationFrame(getTime) }
-      }
-      requestAnimationFrame(getTime)
-    }
-    else {
-      setInterval(() => {
-        observer.onNext(Date.now())
-      }, 1/framerate * 1000)
+    let gen = new DataGenerator(framerate, () => {
+      observer.onNext(Date.now())
+    })
+    return function () {
+      gen.stop()
     }
   })
 }
@@ -85,7 +83,7 @@ export function time (framerate = 0) {
  * @param {number} [$0.width=320] optional width for the returned frame (height is calculated).
  * @returns {Observable} pixel array stream
  */
-export function sight ({framerate = 0, width = 320}) {
+export function sight ({framerate = 33, width = 320} = {}) {
   let canvas = document.createElement('canvas')
   let ctx = canvas.getContext('2d')
   let video = document.createElement('video')
@@ -104,24 +102,16 @@ export function sight ({framerate = 0, width = 320}) {
   return Rx.Observable.create((observer) => {
     getUserMedia({audio: false, video: true}, (err, stream) => {
       if (err) { observer.onError(err); return }
-      let updateSight = () => {
+      video.srcObject = stream
+      video.play()
+      let gen = new DataGenerator(framerate, () => {
         if (!streaming) { return }
         ctx.drawImage(video, 0, 0, width, height)
         let frame = ctx.getImageData(0, 0, width, height)
         observer.onNext(frame)
-        if(framerate === 0) { requestAnimationFrame(updateSight) }
-      }
-      video.srcObject = stream
-      video.play()
-      if (framerate === 0) {
-        requestAnimationFrame(updateSight)
-      }
-      else {
-        setInterval(() => {
-          updateSight()
-        }, 1/framerate * 1000)
-      }
+      })
     })
+    return function () { gen.stop() }
   }).publish().refCount()
 }
 
@@ -132,7 +122,7 @@ export function sight ({framerate = 0, width = 320}) {
  * @param {number} [$0.fftSize=2048] optional fft resolution.
  * @returns {Observable} Uint8Array stream
  */
-export function sound ({framerate = 0, fftSize=2048}) {
+export function sound ({framerate=0, fftSize=2048} = {}) {
   let audioCtx = new AudioContext();
   var analyser = audioCtx.createAnalyser();
   analyser.fftSize = fftSize;
@@ -141,22 +131,14 @@ export function sound ({framerate = 0, fftSize=2048}) {
   return Rx.Observable.create((observer) => {
     getUserMedia({audio: true, video: false}, (err, stream) => {
       if (err) { observer.onError(err); return }
-      let updateSound = () => {
-        analyser.getByteTimeDomainData(freqData)
-        observer.onNext(freqData)
-        if(framerate === 0) { requestAnimationFrame(updateSound) }
-      }
       let source = audioCtx.createMediaStreamSource(stream)
       source.connect(analyser)
-      if (framerate === 0) {
-        requestAnimationFrame(updateSound)
-      }
-      else {
-        setInterval(() => {
-          updateSound()
-        }, 1/framerate * 1000)
-      }
+      let gen = new DataGenerator(framerate, () => {
+        analyser.getByteTimeDomainData(freqData)
+        observer.onNext(freqData)
+      })
     })
+    return function () { gen.stop() }
   }).publish().refCount()
 }
 
@@ -296,8 +278,8 @@ export function touchend () {
   * defaults to 0, which uses requestAnimationFrame
   * @returns {Observable} stream of random numbers or an array of random numbers
  */
-export function random ({seed = null, shape = [1, 0, 0], framerate = 0}) {
-  if (!seed) {seed = Math.random()}
+export function random ({seed = -1, shape = [1, 0, 0], framerate = 0} = {}) {
+  if (seed === -1) {seed = Math.random()}
   return Rx.Observable.create((observer) => {
     let gen = new DataGenerator(framerate, () => {
       let noise = noiseArrHelper(shape, Math.random, Math.random)
@@ -320,8 +302,8 @@ export function random ({seed = null, shape = [1, 0, 0], framerate = 0}) {
   * defaults to 0, which uses requestAnimationFrame
   * @returns {Observable} stream of simplex values
  */
-export function simplexnoise ({seed = null, shape = [1, 0, 0], framerate = 0}) {
-  if (!seed) {seed = Math.random()}
+export function simplexnoise ({seed = -1, shape = [1, 0, 0], framerate = 0} = {}) {
+  if (seed === -1) {seed = Math.random()}
   return Rx.Observable.create((observer) => {
     let noiseGen = new Noise(seed)
     let gen = new DataGenerator(framerate, () => {
@@ -349,8 +331,8 @@ export function simplexnoise ({seed = null, shape = [1, 0, 0], framerate = 0}) {
   * defaults to 0, which uses requestAnimationFrame
   * @returns {Observable} stream of perlin values
  */
-export function perlinnoise ({seed = null, shape = [1, 0, 0], framerate = 0}) {
-  if (!seed) {seed = Math.random()}
+export function perlinnoise ({seed = -1, shape = [1, 0, 0], framerate = 0} = {}) {
+  if (seed === -1) {seed = Math.random()}
   return Rx.Observable.create((observer) => {
     let noiseGen = new Noise(seed)
     let gen = new DataGenerator(framerate, () => {
@@ -367,11 +349,27 @@ export function perlinnoise ({seed = null, shape = [1, 0, 0], framerate = 0}) {
   })
 }
 
+export function midi () {
+  return Rx.Observable.create((observer) => {
+    if (navigator.requestMIDIAccess) {
+      navigator.requestMIDIAccess({sysex: false}).then(
+        (midiData) => {
+          observer.onNext(midiData)
+        },
+        (err) => { observer.onError(err) }
+      )
+    } else {
+      observer.onError('your browser does not support MIDI')
+    }
+  })
+}
+
 export default {
   time, sight, sound,
   geolocation, resize, scroll,
   mousedown, mouse, mousemove, mouseup, click, dblclick,
   keydown, keypress, keyup,
   touchstart, touchmove, touchend,
-  random, simplexnoise, perlinnoise
+  random, simplexnoise, perlinnoise,
+  midi
 }
