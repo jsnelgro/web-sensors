@@ -9,9 +9,6 @@
     "build": "babel src -d lib",
     "prepublish": "npm run build"
   },
-  "jest": {
-    "rootDir": "./lib"
-  },
   "keywords": [
     "client",
     "html5",

@@ -6,6 +6,13 @@ Web Sensors is a wrapper around a handful of common web APIs. It provides a simp
 
     npm install web-sensors --save
 
+# Testing
+
+Currently only tested on Chrome for OSX. PRs welcome!
+
+    npm run test
+    (then open http://localhost:8080 in browser)
+
 # Example Usage
 
     import { sight, click, mouse, simplexnoise } from 'web-sensors'
@@ -48,7 +55,7 @@ a wrapper to make getting a webcam feed much easier than the standard getUserMed
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
     -   `$0.framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
         defaults to 0, which uses requestAnimationFrame (optional, default `0`)
     -   `$0.width` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional width for the returned frame (height is calculated). (optional, default `320`)
@@ -61,7 +68,7 @@ a wrapper to make getting a microphone feed much easier than the standard getUse
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
     -   `$0.framerate` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional framerate.
         defaults to 0, which uses requestAnimationFrame (optional, default `0`)
     -   `$0.fftSize` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional fft resolution. (optional, default `2048`)
@@ -152,7 +159,7 @@ generates a stream of random numbers
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
     -   `$0.seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
     -   `$0.shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
         shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
@@ -169,7 +176,7 @@ generates a stream of values using simplex noise
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
     -   `$0.seed` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** optional seed for the generator. (optional, default `Math.random()`)
     -   `$0.shape` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)?** the dimensionality of the returned value
         shape[0] corresponds to the length of the x axis, shape[1] corresponds to the length of the y axis,
@@ -186,7 +193,7 @@ generates a stream of values using perlin noise
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
     -   `$0.seed`   (optional, default `null`)
     -   `$0.shape`   (optional, default `[1, 0, 0]`)
     -   `$0.framerate`   (optional, default `0`)

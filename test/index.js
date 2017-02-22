@@ -28,11 +28,12 @@ describe('time', function () {
   })
 
   it('defaults to 60 fps if no framerate option is given', function(done) {
+    this.retries(2)
     let start = Date.now()
     let bangs = 0
     Sensors.time().subscribe(function(t) {
-      if (t -start >= 10) {
-        expect(bangs).to.be.within(1, 2)
+      if (t - start >= 500) {
+        expect(bangs).to.be.within(30, 31)
         done()
         this.dispose()
       }
@@ -85,6 +86,74 @@ describe('sound', function () {
     })
   })
 })
+
+describe('geolocation', function() {
+  it.skip('returns a stream of the users lat lng coords', function (done) {
+    this.timeout(6000)
+    Sensors.geolocation().subscribe(function({coords}) {
+      expect(coords.latitude).to.be.within(-180, 180)
+      expect(coords.longitude).to.be.within(-180, 180)
+      done()
+      this.dispose()
+    })
+  })
+})
+
+
+describe('resize', function() {
+  it.skip('fires on resize', function(done) {
+    Sensors.resize().subscribe(function () {
+      done()
+      this.dispose()
+    })
+    window.dispatchEvent(new Event('resize'))
+  })
+})
+
+describe('scroll', function() {
+  it('fires on scroll', function(done) {
+    Sensors.scroll().subscribe(function () {
+      done()
+      this.dispose()
+    })
+    window.scroll(0, 0)
+    window.scroll(100, 100)
+  })
+})
+
+describe('mousedown', function () {})
+
+describe('mousemove', function () {})
+
+describe('mouse', function () {})
+
+describe('mouseup', function () {})
+
+describe('click', function () {})
+
+describe('dblclick', function () {})
+
+describe('keydown', function () {})
+
+describe('keypress', function () {})
+
+describe('keyup', function () {})
+
+describe('touchstart', function () {})
+
+describe('touchmove', function () {})
+
+describe('touch', function () {})
+
+describe('touchend', function () {})
+
+describe('random', function () {})
+
+describe('simplexnoise', function () {})
+
+describe('perlinnoise', function () {})
+
+describe('midi', function () {})
 
 mocha.checkLeaks()
 mocha.run()
